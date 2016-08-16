@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -52,6 +53,9 @@ func main() {
 	deliveryoptionsreq := DeliveryOptions.GetDeliveryOptionRequest{Items: []DeliveryOptions.Item{DeliveryOptions.Item{Quantity: 100, Sku: "VIP-45696"}}, DestinationAddress: DeliveryOptions.DestinationAddress{AddressLine1: "Harumi Triton Tower F25", AddressLine2: "Harumi 1-1-1 chuo-ku", City: "Tokyo", CountryCode: "us", County: "us", StateOrRegion: "tokyo", PostalCode: "200101"}}
 	deliveryoptionsres, deliveryoptionserr := DeliveryOptions.GetDeliveryOptions(deliveryoptionsreq, tokenres)
 	panicOnError(deliveryoptionserr)
-	fmt.Println("DeliveryOptions: ", deliveryoptionsres.DeliveryOptions)
+	mashralleddeliveryoptions, marshallerr := json.Marshal(deliveryoptionsres)
+	panicOnError(marshallerr)
+	fmt.Println("DeliveryOptions: ", string(mashralleddeliveryoptions))
 	continueStep()
+
 }
